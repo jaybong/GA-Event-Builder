@@ -1,0 +1,71 @@
+<!doctype html>
+<html class="no-js" ng-app lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Analytics Event Tracking Code Builder</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+
+  
+<style>
+input[type="text"] { float: left; width: 16%; font-size: 11px; }  
+input[type="text"] + input[type="text"] { margin-left: 3%; }
+.plus { position: absolute; top: 5px; right: 15px; padding: 5px 10px; border-radius: 2px; }
+.clearfix:after { content: " "; visibility: hidden; display: block; height: 0; clear: both; }
+.inputs { position: relative; margin-top: 20px; }
+.nav {  }
+.nav h6 { display: inline; }
+.nav a { display: inline-block; margin-right: 3%; }
+</style>
+
+  </head>
+
+    <div class="row">
+      <div class="large-12 columns nav">
+       <div data-alert class="alert-box info radius">
+       <h6>Google Analytics Event Tracking Code Builder</h6>
+  <a class="right" href="https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide" target="_blank">Official Docs</a>
+</div>
+        
+      </div>
+    </div>
+    
+<div class="row">
+  <div class="large-12 columns">
+  <div class="event" ng-controller="TodoCtrl">
+    <div class="panel"  ng-repeat="todo in todos">    
+<form class="right plus clearfix" ng-submit="addTodo()">       
+        <input class="button right plus clearfix" type="submit" value="Add +">
+</form>
+       <div class="inputs">     
+      
+        <div class="repeater">
+            <input type="text" class="category-required" ng-model="category" placeholder="category (required)">
+            <input type="text" class="action-required" ng-model="action" placeholder="action (required)">
+            <input type="text" ng-model="label" placeholder="label (optional)">
+            <input type="text" ng-model="value" placeholder="value (optional)">
+            <input type="text" ng-model="nonInteraction" placeholder="noninteraction (optional)">
+                  <hr>
+            <div class="code alert-box warning">_trackEvent({{category}}, {{action}}, {{label}}, {{value}}, {{nonInteraction}})</div>
+        </div>
+
+    </div>
+
+
+    </div> 
+    </div>     
+    </div>
+  </div>
+
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+        <script src="js/app.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
