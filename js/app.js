@@ -1,11 +1,43 @@
 
 $(function(){
 
-	$('.inputs input').blur(function()
+  // ** Form Validation =====================================
+// ====================================================
+
+	$('body').on('blur', '.inputs input', function()
 	{
-	      if( $('.category-required').val().length > 0 && $('.action-required').val().length > 0 ) {
-	            $('.warning').removeClass('warning').addClass('success');
-	      }
+
+        var ValidationSet = false;
+        var Repeater = $(this).parents('.repeater');
+
+        Repeater.find('.required').each(function () {
+
+    	      if( $(this).val().length === 0 ) {
+
+                  ValidationSet = false;
+                  return false;
+
+    	      }else{
+
+                  ValidationSet = true;
+
+            }
+
+            console.log(ValidationSet);
+
+        });
+
+
+
+        if(ValidationSet === true){
+
+          Repeater.find('.alert-box').removeClass('warning').addClass('success');
+
+        }else{
+
+           Repeater.find('.alert-box').removeClass('success').addClass('warning');
+
+        }
 	});
 
 // ** Float Label =====================================
