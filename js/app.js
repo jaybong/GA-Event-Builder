@@ -74,6 +74,22 @@ $('#offical-docs-link').click(function(){
 });
 
 
+
+$("#onclick").click( function() {
+
+  var current = $(this);
+  console.log(current);
+    if ($(this).is(':checked')){
+        $('.code').prepend('onlick="').append('"');
+    }
+    if ($(this).attr('unchecked')){
+        $('.code').prepend('').append('');
+    }
+});
+
+
+
+
 });  // Ready
 
  

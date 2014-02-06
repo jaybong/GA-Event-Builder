@@ -414,12 +414,12 @@ triggers the event during the same session.
 <div class="row">
   <div class="large-12 columns">
   <div class="event" ng-controller="TodoCtrl">
-    <div class="panel"  ng-repeat="todo in todos">    
+    <div class="panel" ng-repeat="todo in todos">    
 <form class="right plus clearfix" ng-submit="addTodo()">       
         <input class="button right plus clearfix" type="submit" value="Add +">
 </form>
        <div class="inputs">     
-      
+  
         <div class="repeater">
            <div class="field-wrapper">
                 <label for="category">Category (required)</label>
@@ -443,6 +443,7 @@ triggers the event during the same session.
             </div>    
                   <hr>
             <div class="code alert-box warning">_trackEvent({{category}}, {{action}}, {{label}}, {{value}}, {{nonInteraction}})</div>
+            <input type="checkbox" id="onclick" class="onclick"><label for="onclick">Wrap onClick</label>
         </div>
 
     </div>

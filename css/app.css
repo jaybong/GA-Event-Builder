@@ -14,7 +14,7 @@ input[type="text"] { font-size: 11px; }
   display: inline-block;
   float: left; width: 16%;
 }
-label {
+.field-wrapper label {
   position:absolute;
   top:-13px;
   font-size:11px;
