@@ -4,7 +4,7 @@ $(function(){
   // ** Form Validation =====================================
 // ====================================================
 
-	$('body').on('blur', '.inputs input', function()
+	$('body').on('keydown', '.inputs input', function()
 	{
 
         var ValidationSet = false;
