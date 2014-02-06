@@ -1,0 +1,465 @@
+<!doctype html>
+<html class="no-js" ng-app lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Analytics Event Tracking Code Builder</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+
+  
+<style>
+
+</style>
+
+  </head>
+
+
+      <div class="nav">
+       <div data-alert class="alert-box info radius" id="header">
+       <h6>Google Analytics Event Tracking Code Builder</h6>
+  <a class="right" id="offical-docs-link">Documentation</a>
+
+        
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+      <!-- Google Official Docs -->
+      <div id="official-docs" class="official-docs">
+                <div itemprop="articleBody">
+
+<p>
+This document assumes familiarity with Google Analytics Tracking Code
+configuration. Additionally, you must have
+the <code>ga.js</code> tracking code installed on those pages where
+you configure Event Tracking as described here. For more information
+on tracking your site using the GATC, see
+the <a href="/analytics/devguides/collection/gajs/">Tracking
+Basics</a> guide.</p>
+
+<table class="columns" id="toc-list">
+  <tbody><tr>
+    <td>
+      <ol class="toc">
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#SettingUpEventTracking">Setting Up Event
+      Tracking</a>
+      </li>
+    </ol>
+    </td>
+    <td>
+      <ol class="toc">
+      <li><a href="#Anatomy">Anatomy of Event Tracking</a>
+        <ol class="toc">
+          <li><a href="#Categories">Categories</a></li>
+          <li><a href="#Actions">Actions</a></li>
+          <li><a href="#Labels">Labels</a></li>
+          <li><a href="#Values">Values</a></li>
+          <li><a href="#non-interaction">Non-interaction
+          Events</a></li>
+          <li><a href="#Count">Implicit Count</a></li>
+        </ol>
+      </li>
+      </ol>
+    </td>
+    <td>
+      <ol class="toc">
+      <li><a href="#implementationConsiderations">Implementation
+      Considerations</a></li>
+    </ol>
+    </td>
+  </tr>
+</tbody></table>
+
+
+<h2 id="intro">Introduction</h2>
+<p>Event Tracking is a method available in the <code>ga.js</code>
+tracking code that you can use to record user interaction with website
+elements, such as a Flash-driven menu system. This is accomplished by
+attaching the method call to the particular UI element you want to
+track.  When used this way, all user activity on such elements is
+calculated and displayed as Events in the Analytics reporting
+interface. Additionally, pageview calculations are unaffected by user
+activity tracked using the Event Tracking method. Finally, Event
+Tracking employs an object-oriented model that you can use to collect
+and classify different types of interaction with your web page
+objects.</p>
+<p>With <code>ga.js</code>, you would commonly apply Event Tracking
+  to:</p>
+<ul>
+  <li>Any Flash-driven element, like a Flash website, or a Flash Movie player</li>
+  <li>Embedded AJAX page elements</li>
+  <li>Page gadgets </li>
+  <li>File downloads</li>
+  <li>Load times for data </li>
+</ul>
+
+<p>The design model for Event Tracking is highly flexible, and its use
+can be extended well beyond the common model of user-triggered
+events—the design decision is up to you. For this reason, useful
+Event Tracking reports require collaboration with your report users
+  and good report planning.</p>
+<ul class="listhead">
+<li>Determine in advance all elements for which you want to track
+data. <p>Even if you initially track only a single object on your
+website, having an overall sense of the various objects/events you
+want to track will help you establish a report structure that scales
+well with an increase in the number and type of Event
+Tracking. </p></li>
+<li>Work with your report user to plan your Event Tracking
+reports.  <p>Knowing in advance how the reports should look will
+direct the structure of your Event Tracking implementation. For
+example, if the reports only need to show video UI interaction, your
+category structure will be quite different than if the reports need to
+track other Flash UIs like menus, embedded gadgets, and load times. In
+addition, you can inform the report user about the different tracking
+possibilities available with Event Tracking to get the most out of
+your implementation.  For example, the report user might be interested
+in tracking user behavior on a Flash video interface, but might also
+be interested in latency tracking for the load time of the video. In
+that case, you can plan ahead to have meaningful names in your event
+calls.</p>
+</li>
+<li>Adopt a consistent and clear naming convention.  <p>In the process
+of implementing Event Tracking, every name you supply for categories,
+actions, and labels appears in the reporting interface.  In addition,
+a category/action pair is treated as a unique element in the report
+statistics, so consider first how you want your metrics to be
+calculated for all objects belonging to a similar category.</p>
+</li>
+</ul>
+
+<div align="right"><a href="#top" class="backtotop">Back to Top</a></div>
+<h2><a name="SettingUpEventTracking" id="SettingUpEventTracking"></a>Setting Up Event Tracking </h2>
+<p>Before you can view event tracking results in your reports, you must set it
+  up on your site following these steps.   </p>
+<ol>
+  <li><strong>Set up tracking on your site</strong>. Make sure you have set up tracking for your
+    website. For information on setting this up, see <a href="/analytics/devguides/collection/gajs/asyncTracking">Tracking
+    Sites</a>.</li>
+  <li><strong>Call the  <code>_trackEvent()</code> method</strong> in the source code of
+    a page object, widget, or video. <br>
+   <p>The  specification
+  for the <code>_trackEvent()</code> method is: </p>
+<pre>_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)</pre>
+<ul class="listhead">
+      <li>category (required)
+        <p>The name you supply for the group of objects you want to track.</p>
+      </li>
+      <li>action (required)
+        <p>A string  that is uniquely paired with each category, and commonly used to define the type of user interaction for the web object. </p>
+      </li>
+      <li>label (optional)
+        <p>An optional string  to provide additional dimensions to the event data. </p>
+      </li>
+      <li>value (optional)
+        <p>An integer that you can use to provide numerical data about the user event. </p>
+      </li>
+      <li>non-interaction (optional)
+        <p>A boolean that when set to <code>true</code>, indicates
+        that the event hit will not be used in bounce-rate
+        calculation.</p>
+      </li>
+</ul>
+  </li><li><strong>View the reports.</strong> Once event tracking has been set up and working on your
+    site for a day, go to the <em>Content</em> section of the reports and view <em>Event
+    Tracking</em>.</li>
+</ol>
+
+<a name="Anatomy"></a><h2>Anatomy of Event Tracking  </h2>
+<p>The Event Tracking data model has the following components which map directly to elements in the Analytics Reports interface:</p><ul>
+<li>categories</li>
+<li>actions</li>
+<li>labels</li>
+<li>values</li>
+<li>implicit count </li>
+</ul>
+<p>A simple example illustrates how you might use the Event Tracking method to record user interaction with a video <em>Play</em> link on your page.</p>
+<pre>&lt;a href="#" onClick="_gaq.push(['_trackEvent', 'Videos', 'Play', 'Baby\'s First Birthday']);"&gt;Play&lt;/a&gt;</pre>
+<p>In this scenario, the reports for Events would display <em>Videos</em> as the  Category, <em>Play</em> as the Action, and <em>Baby's First Birthday</em> as the Label. The rest of this document describes these components in detail. Bear in mind that when you implement Event Tracking, you can use this data model as a guide, or you can simply use the <code>_trackEvent()</code> method to segment user interaction in any way that works for your data.</p>
+<div align="right"><a href="#top" class="backtotop">Back to Top</a></div>
+
+<a name="Categories" id="Categories"></a>
+<h3>Categories</h3>
+
+  <p>For Event Tracking, a <em>category</em> is a name that you supply as a way to group objects that you want to track. It is the first parameter used in the <code>_trackEvent()</code> method and it is required.</p>
+  <p>The term <em>Category</em> appears in the reporting interface as Top Categories in the Events Overview page. In this  model, a category represents the "root level" of the hierarchical structure of Event Tracking, and you can use that structure in any way suitable to your reporting needs. Typically, you will use the same category name multiple times over related UI elements that you want to group under a given category. </p>
+  <p>For example,  you might track user interaction on three separate controls on a single video interface using:</p>
+  <pre>_gaq.push(['_trackEvent', 'Videos', 'Play', 'Gone With the Wind']);
+_gaq.push(['_trackEvent', 'Videos', 'Pause', 'Gone With the Wind']);
+_gaq.push(['_trackEvent', 'Videos', 'Stop', 'Gone With the Wind']);
+</pre>
+
+    <p>Suppose you also want to track how many times the video is downloaded. You could  use:</p>
+    <pre>_gaq.push(['_trackEvent', 'Videos', 'Downloaded', 'Gone With the Wind']);
+</pre>
+    <p>In this case, there would be only one category—Videos—in the Events Overview page  for Top Categories, and you could see aggregate metrics for  user interaction with the total set of elements for that single video object. </p>
+    <p>However, it's likely that you will have more than one single object that you want to track using Event Tracking, and it's worth considering how you want to categorize your reporting before you implement the call. For instance, you might want to track all separate movies under the main category of "Videos" so that you get aggregate numbers for all video interaction, regardless of which one users interact with.</p>
+    <p> On the other hand, you might create  separate categories based on the type of video—one for movie videos and one for music videos. You might also want a separate category for video downloads:</p>
+    <ul>
+    <li>Videos - Movies</li>
+    <li>Videos - Music</li>
+    <li>Downloads </li>
+  </ul>
+  <p>In this scenario, you can determine the total combined event count for all three categories via the Total Events dashboard. The Total Events metric displays all event counts for all  categories that you have supplied in your Event Tracking implementation. However, you will not  be able to view combined metrics for all Videos separately from Downloads, because detailed event metrics are combined under their respective categories.  </p>
+  <p>While the Event Tracking  object model is entirely flexible, you should first  plan your desired reporting structure before calling the <code>_trackEvent()</code> method for similar web object elements. If you plan to use the same category name in multiple locations, be careful to correctly reference the desired category by name. For example, if you plan to call your video tracking category "Video" and later forget and use the plural "Videos," you will have two separate categories for video tracking. Additionally, if you decide to change the category name of an object that has already been tracked under a different name, the historical data for the original category will not be re-processed, so you will have metrics for the same web page element listed under two categories in the reporting interface.</p>
+  <div align="right"><a href="#top" class="backtotop">Back to Top</a></div>
+
+  <h3><a name="Actions" id="Actions"></a>Actions</h3>
+    <p>The term "Action" in the Event Tracking model refers to the second parameter in the <code>_trackEvent()</code> method. It too is required.</p>
+        <pre>_gaq.push(['_trackEvent', 'Videos', 'Play', 'Gone With the Wind']);</pre>
+
+        <p>Typically, you will use the <code>action</code> parameter to name the type of event or interaction you want to track for a particular web object.  For example, with a single "Videos" category, you can track a number of specific events with this parameter, such as: </p>
+  <ul>
+        <li>Time when the video completes load</li>
+        <li>"Play" button clicks</li>
+        <li>"Stop" button clicks </li>
+        <li>"Pause" button clicks</li>
+    </ul>
+        <p>As with categories, the name you provide for an <code>action</code> is up to you, but keep in mind two important features of how an event action is used in the reports:</p>
+        <ul>
+          <li><strong>All actions are listed independently from their parent categories.</strong> <br>
+          This provides you with another useful way to segment the event data for your reports. </li>
+          <li><strong>A unique event is determined by a unique action name</strong>.<br>
+          You can use duplicate action names across categories, but this can affect how unique events are calculated. See the suggestions below and the <a href="#Count">Implicit Count</a> section for more details.</li>
+    </ul>
+        <p>To achieve the best possible reports for extensive Event Tracking in your site, keep in mind the following suggestions for using actions:</p>
+        <ul class="listhead">
+          <li>Action names should be  relevant to your report data
+          <p>
+          Event Tracking  combines metrics for the same action name across two different categories. For example, if you use the action name "Click" for both the "Downloads" category and the "Videos" category, the metrics for the "Click" in the Top Actions report appears with all interactions tagged with that same name. You could then view a detailed break-down of the "Click" action by category in the next report level. However, if you use the action "click" indiscriminately across your Event Tracking implementation, the usefulness of that segment will be diminished in the reports. Consider choosing action names that relate to your data categories if you plan to use Event Tracking extensively on your website. For example, you might choose to reserve the term "click" for gadget interactions, while keeping the action terms, "Play," "Pause," and "Stop" reserved for video player interactions.</p>
+          </li>
+          <li>Use action names globally to either aggregate or distinguish user interaction
+            <p>For example, you can use "Play" as an action name to the "Videos" category for all videos on your website. In this model, the Top Actions report would provide aggregate data for  events for the "Play" action, and you can see how this event for your videos compares to other events for the videos, such as "Pause" or "Stop."</p>
+            <p>However, suppose you want to use one video category for your reports, but you want some information about two different video player UIs. You can use the action name to distinguish the different player chromes without having to create separate video categories. The report can then distinguish the two player styles without losing the benefits of aggregate data on all videos for your website.</p>
+<pre>_gaq.push(['_trackEvent', 'Videos', 'Play - Mac Chrome']);
+_gaq.push(['_trackEvent', 'Videos', 'Play - Windows Chrome']);
+</pre>
+          </li>
+          <li>Action does not always mean "action"
+            <p>You can supply any string for the action parameter. In some situations, the actual event or action name is not as meaningful, so you might use the action parameter to track other elements. For example, if you want to track page downloads, you could provide the document file type as the action parameter for the download event. In this scenario, your reports for the "Downloads" category would then be broken out by file types (pdf, doc, xls). </p>
+          </li>
+            <li>Unique events are incremented by unique actions
+              <p>Any time a user interacts with an object tagged with a particular action name, the initial interaction is logged as one <em>unique event</em> for that action name. Any additional interaction with the same action trigger for that user's session will not contribute to the unique event calculation for that particular action.  This is true even if the user leaves that object and begins to interact with another object tagged via the same action name. <br>
+                <br>
+              This has two notable results in the reports. First, suppose a user interacts with the "Play" action from two  unique video players tagged with separate categories. The <em>Top Actions</em> reports for "Play" will list one unique event even though the user engaged with two unique players. Secondly, each category's <em>Action</em> report will list one unique action, since there is indeed one unique event per category/action pair. See <a href="#Count">Implicit Count</a> for more information.</p>
+          </li>
+    </ul>
+<div align="right"><a href="#top" class="backtotop">Back to Top</a></div>
+
+        <h3><a name="Labels" id="Labels"></a>Labels</h3>
+    <p>The term "Label" in the Event Tracking data model refers to the third  string parameter in the <code>_trackEvent()</code> method. This parameter is optional. With labels, you can provide additional information for events that you want to track, such as the movie title in the video examples above, or the name of a file when tracking downloads. </p>
+    <pre>_gaq.push(['_trackEvent', 'Downloads', 'PDF', '/salesForms/orderForm1.pdf']);</pre>
+    <p>As with Categories  and Actions, the reporting interface has its own section for all labels you create for your Event Tracking. Think of a label as a way to create an additional reporting dimension for user interaction with page objects. For example, suppose you  have five video players on your page that you want to track interaction with.  Each one of these players can use the "Videos" category with the "Play" action, but each could also have a separate label (such as the movie name) so that they appear as distinct elements in the report.  </p>
+        <pre>_gaq.push(['_trackEvent', 'Videos', 'Play', 'Gone With the Wind']);
+_gaq.push(['_trackEvent', 'Videos', 'Play', 'Huckleberry Finn']);</pre>
+  <h3><a name="Values" id="Values"></a>Values</h3>
+    <p>The term "Value"  refers to the fourth, and optional, parameter that you can use with the <code>_trackEvent() </code>method. This parameter differs from the others in that it is of type <code>integer</code> rather than <code>string</code>, so use it to assign a numerical value to a tracked page object.  For example, you could use it to provide the time in seconds for an player to load, or you might trigger a dollar value when a specific playback marker is reached on a video player. </p>
+    <pre>_gaq.push(['_trackEvent', 'Videos', 'Video Load Time', 'Gone With the Wind', downloadTime]);</pre>
+    <p>The value is interpreted as a number and the report adds the total
+      values based on each event count (see <a href="#Count">Implicit Count</a> below).
+      The report also determines the average value for the category. In the example
+      above, the <code>_trackEvent()</code> method is called for the "Video
+      Load Time" action when video load completes. The name of the video
+      is provided as a label, and the computed load time is accrued for each
+      video download. You could then determine average load time for all "Video
+      Load Time" actions for the "Videos" category. Suppose you
+      had 5 unique downloads for your website videos with download times in seconds
+      as:</p>
+    <ul>
+      <li>10</li>
+      <li>25</li>
+      <li>8</li>
+      <li>5</li>
+      <li>5</li>
+    </ul>
+    <p>The reporting interface would then compute these as follows, with the numbers in this example illustrating download time in seconds: </p>
+    <table width="320" border="1">
+      <tbody><tr>
+        <th scope="col"># Visits w/Events </th>
+        <th scope="col">Value</th>
+        <th scope="col">Average Value </th>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>53</td>
+        <td>10.6</td>
+      </tr>
+    </tbody></table>
+    <p class="note">Negative integers are not supported at this time.</p>
+
+  <h3><a name="non-interaction" id="non-interaction"></a>Non-Interaction Events</h3>
+    <p>The term "Non-interaction" applies to the final, and
+      optional, boolean parameter that you can use with
+      the <code>_trackEvent() </code>method. This parameter allows you to
+      determine how you want bounce rate defined for pages on your
+      site that also include event tracking.  For example, suppose you
+      have a home page with a video embedded on it.  It's quite
+      natural that you will want to know the bounce rate for your home
+      page, but how do you want to define that?  Do you consider
+      visitor interaction with the home page video an important
+      engagement signal?  If so, you would want interaction with the
+      video to be included in the bounce rate calculation, so that
+      sessions including only your home page <strong>with</strong>
+      clicks on the video are not calculated as bounces.  On the other
+      hand, you might prefer a more strict calculation of bounce rate
+      for your home page, in which you want to know the percentage of
+      sessions including only your home
+      page <strong>regardless</strong> of clicks on the video.  In
+      this case, you would want to exclude any interaction with the
+      video from bounce rate calculation.</p>
+
+<p>That's where the <code>opt_noninteraction</code> parameter steps
+in.  Remember that a bounce is defined as a session containing only
+one interaction hit. By default, the event hit sent by <code>_trackEvent()</code>
+is considered an <em>interaction</em> hit, which means that it is
+included in bounce rate calculations. However, when this value is set
+to <code>true</code>, the type of event hit is <strong>not</strong>
+considered an <em>interaction</em> hit. You can use this fact to
+adjust bounce rate calculations for pages that contain events.
+Setting this value to <code>true</code> means: a session containing a
+single page tagged with non-interaction events is counted as a
+bounce—even if the visitor also triggers the event during the
+session. Conversely, omitting this option means that a single-page
+session on a page that includes event tracking
+will <strong>not</strong> be counted as a bounce if the visitor also
+triggers the event during the same session.
+ </p>
+<div align="right"><a href="#top" class="backtotop">Back to Top</a></div>
+  <h3 id="Count">Implicit Count</h3>
+    <p>In Event Tracking, each interaction with a tracked web page object is
+    counted and associated with a given user session. In
+    the reports, Total Events are calculated as the total number of
+    interactions with a tracked web page object.</p>
+    <p>For example, if one user clicks the same button on a video 5 times, the total number of events associated with the video is 5, and the number of unique events is 1.</p>
+    <p>The following table illustrates how data is aggregated in the reporting interface for a given event category. In this example, the same  category name is called from 2 separate video players, each with a distinct label. These players share the actions "Play" and "Stop," as programmed in the Flash UI for the video player. </p>
+<p></p><table width="600" border="1">
+  <caption>
+    Event tracking
+  for "Videos" category
+  </caption>
+  <tbody><tr>
+    <th scope="col">Action Type </th>
+    <th scope="col">Label: "Gone With the Wind" </th>
+    <th scope="col">Label: "Mr Smith Goes to Washington" </th>
+    <th scope="col">Totals</th>
+  </tr>
+  <tr>
+    <td scope="row">Play</td>
+    <td>10 visits w/Event</td>
+    <td>5 visits w/Event </td>
+    <td>15 unique events "Play" </td>
+  </tr>
+  <tr>
+    <td scope="row">Pause</td>
+    <td>2 visits w/Event </td>
+    <td>8 visits w/Event</td>
+    <td>10 unique events "Pause" </td>
+  </tr>
+  <tr>
+    <td scope="row">Stop</td>
+    <td>2 visits w/Event </td>
+    <td>3 visits w/Event </td>
+    <td>5 unique events "Stop" </td>
+  </tr>
+  <tr>
+    <th>Totals</th>
+    <td>14 unique events for GWTW </td>
+    <td>16 unique events for Mr Smith</td>
+    <td>30 unique events for category "videos" </td>
+  </tr>
+</tbody></table>
+<p></p>
+<p></p>
+<div align="right"><a href="#top" class="backtotop">Back to Top</a></div>
+<h2 id="implementationConsiderations">Implementation Considerations</h2>
+<p>Keep in mind the following when implementing Event Tracking for your site.</p>
+<h3>Bounce Rate Impact</h3>
+<p>In general, a "bounce" is described as a single-page visit to your site. In Analytics, a bounce is calculated specifically as a session that triggers only a single GIF request, such as when a user comes to a single page on your website and then exits without causing any other request to the Analytics server for that session. However, if you implement Event Tracking for your site, you might notice a change in bounce rate metrics for those pages where Event Tracking is present. This is because Event Tracking, like page tracking is classified as an interaction request.</p>
+<p>For example, suppose you have a page with a video player where the bounce rate is historically high, and you have not implemented Event Tracking for the page. If  you subsequently set up Event Tracking for the player, you might notice a decrease in the bounce rate  for that page, because Analytics will record user interaction with the player and send that interaction to the server as an additional GIF request.  Thus, even though the same percentage of visitors to the page might still exit without viewing any other page on your site, their interaction with the video player triggers Event Tracking calls, which disqualifies their visit as a bounce.</p>
+<p>In this way, "bounces" for your event-enabled pages means something slightly different:  a single-page visit that includes no user interaction on tracked events.</p>
+<p class="note">It's important to keep in mind that any implementation of Event Tracking that automatically executes on page load will  result in a zero bounce rate for the page.</p>
+<h3>Events Per Session Limit </h3>
+<p>In addition to general
+  <a href="/analytics/devguides/collection/gajs/limits-quotas">
+  collection limits and quotas</a>, the
+  following limit applies to event tracking in <code>ga.js</code>:</p>
+<ul>
+  <li>The first 10 event hits sent to Google Analytics are tracked
+    immediately, thereafter tracking is rate limited to one event hit per
+    second.</li>
+</ul>
+<p>As the number of events in a session approaches the
+  <a href="/analytics/devguides/collection/gajs/limits-quotas">collection
+  limit</a>, additional events might not be tracked. For this reason, you
+  should:
+</p>
+<ul>
+  <li> avoid scripting a video to send an event for every second played and
+    other highly repetitive event triggers </li>
+  <li>avoid excessive mouse movement tracking</li>
+  <li>avoid time-lapse mechanisms that generate high event counts</li>
+</ul>
+  <div align="right"><a href="#top" class="backtotop">Back to Top</a></div>
+  
+  </div>
+    </div>
+      </div>
+    </div>
+    
+<div class="row">
+  <div class="large-12 columns">
+  <div class="event" ng-controller="TodoCtrl">
+    <div class="panel"  ng-repeat="todo in todos">    
+<form class="right plus clearfix" ng-submit="addTodo()">       
+        <input class="button right plus clearfix" type="submit" value="Add +">
+</form>
+       <div class="inputs">     
+      
+        <div class="repeater">
+           <div class="field-wrapper">
+                <label for="category">Category (required)</label>
+                <input type="text" name="category" class="category-required" ng-model="category" placeholder="Category (required)">
+            </div>
+            <div class="field-wrapper">
+                <label for="action">Action (required)</label>
+                <input type="text" name="action" class="action-required" ng-model="action" placeholder="Action (required)">
+            </div>    
+            <div class="field-wrapper">
+                <label for="label">Label (optional)</label>
+                <input type="text" ng-model="label" placeholder="Label (optional)">
+            </div>
+            <div class="field-wrapper">
+                <label for="value">Value (optional)</label>   
+                <input type="text" ng-model="value" placeholder="Value (optional)">
+            </div>
+            <div class="field-wrapper">    
+                <label for="noninteraction">Non Interaction (optional)</label>
+                <input type="text" ng-model="nonInteraction" placeholder="Non Interaction (optional)">
+            </div>    
+                  <hr>
+            <div class="code alert-box warning">_trackEvent({{category}}, {{action}}, {{label}}, {{value}}, {{nonInteraction}})</div>
+        </div>
+
+    </div>
+
+
+    </div> 
+    </div>     
+    </div>
+  </div>
+
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+        <script src="js/app.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
