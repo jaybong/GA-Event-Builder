@@ -4,8 +4,8 @@ $(function(){
   // ** Form Validation =====================================
 // ====================================================
 
-	$('body').on('blur', '.inputs input', function()
-	{
+
+	$('body').on('input', '.inputs input', function(){
 
         var ValidationSet = false;
         var Repeater = $(this).parents('.repeater');
@@ -23,7 +23,6 @@ $(function(){
 
             }
 
-            console.log(ValidationSet);
 
         });
 
@@ -80,13 +79,32 @@ $('#offical-docs-link').click(function(){
 // ** Angular =========================================
 // ====================================================
 
-function TodoCtrl($scope) {
-  $scope.todos = [
-    {text:''}];
+function GATrackingCtrl($scope) {
+  $scope.TrackingCodes = [
+    {text:''}
+  ];
+
+  $scope.AddOnClick = false;
  
-  $scope.addTodo = function() {
-    $scope.todos.push({text:$scope.todoText});
-    $scope.todoText = '';
+  $scope.AddTrackingCode= function() {
+    $scope.TrackingCodes.push({text:$scope.TrackingCodeText});
+    $scope.TrackingCodeText = '';
   };
- 
+
+
+  /* Update Checkbox Function */
+  $scope.ChangeCheckBox = function(){
+
+    if($scope.AddOnClick == false){
+
+        $scope.AddOnClick = true;
+
+    }else{
+
+        $scope.AddOnClick = false;
+
+    }
+
+  }
+
 }

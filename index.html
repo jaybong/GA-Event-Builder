@@ -413,9 +413,9 @@ triggers the event during the same session.
     
 <div class="row">
   <div class="large-12 columns">
-  <div class="event" ng-controller="TodoCtrl">
-    <div class="panel"  ng-repeat="todo in todos">    
-<form class="right plus clearfix" ng-submit="addTodo()">       
+  <div class="event" ng-controller="GATrackingCtrl">
+    <div class="panel"  ng-repeat="TrackingCode in TrackingCodes">    
+<form class="right plus clearfix" ng-submit="AddTrackingCode()">       
         <input class="button right plus clearfix" type="submit" value="Add +">
 </form>
        <div class="inputs">     
@@ -442,7 +442,27 @@ triggers the event during the same session.
                 <input type="text" ng-model="nonInteraction" placeholder="Non Interaction (optional)">
             </div>    
                   <hr>
-            <div class="code alert-box warning">_trackEvent({{category}}, {{action}}, {{label}}, {{value}}, {{nonInteraction}})</div>
+            
+            <div class="code alert-box warning" ng-switch on="TrackingCode.AddOnClick">
+
+                <div ng-switch-when="true">
+                    <!-- code to render when AddOnClick checkbox is checked-->
+                    onClick="_gaq.push( [ '_trackEvent({{category}}', '{{action}}', '{{label}}', '{{value}}', '{{nonInteraction}}' ] );
+                </div>
+                <div ng-switch-default>
+                    <!-- code to render when AddOnClick checkbox is un-checked -->
+                    _trackEvent({{category}}, {{action}}, {{label}}, {{value}}, {{nonInteraction}})
+                </div>
+               
+            </div>
+            
+            <div class="small-4">
+              
+                <p class="left">Wrap Code In OnClick Function</p>
+                
+                  <input type="checkbox" name="add_on_click" class="add_on_click right" ng-model="TrackingCode.AddOnClick" ng-click="ChangeCheckBox()" />
+              
+            </div>
         </div>
 
     </div>
