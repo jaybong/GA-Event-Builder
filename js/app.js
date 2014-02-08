@@ -4,8 +4,13 @@ $(function(){
   // ** Form Validation =====================================
 // ====================================================
 
+<<<<<<< HEAD
 
 	$('body').on('input', '.inputs input', function(){
+=======
+	$('body').on('keydown', '.inputs input', function()
+	{
+>>>>>>> fe35caea9636d3b03ef6cad14ef2a90c7389736e
 
         var ValidationSet = false;
         var Repeater = $(this).parents('.repeater');
