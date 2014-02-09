@@ -91,12 +91,29 @@ $('#offical-docs-link').click(function(){
     $.get( "docs.html", function( data ) {
   $( "#docs-insert" ).html( data );
   });
-  $('#docs-insert').slideToggle("fast");
-  $('#offical-docs-link').toggleClass('offical-docs-close');  
+  $('#docs-insert').toggle("fast");
+  $('#offical-docs-link').toggleClass('fi-x');  
   $('body').toggleClass("bg");
 
 });
 
+
+
+// $('.copy-btn').zclip({
+// path:'flash/ZeroClipboard.swf',
+// copy:function()
+//   {
+//     return $('.ng-binding').val();
+//   }
+// });
+
+
+
+
+// $('.copy-btn').zclip({
+// path:'flash/ZeroClipboard.swf',
+// copy:$('.ng-binding').text()
+// });
 
 
 

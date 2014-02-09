@@ -10,7 +10,6 @@
     <script src="js/vendor/modernizr.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
 
-
   </head>
 
 
@@ -26,10 +25,13 @@
 <div class="sticky">
   <nav class="top-bar" data-topbar>
   <div class="small-12 medium-6 large-6 columns">
-       <h6>Google Analytics Event Tracking Code Builder</h6>
+       <h6 class="show-for-large-up">Google Analytics Event Tracking Code Builder</h6>
+       <h6 class="show-for-medium-only">Google Analytics Event Builder</h6>
+       <h6 class="show-for-small-only">GA Events</h6>
+
   </div>
   <div class="small-12 medium-6 large-6 columns">
-       <a class="right" id="offical-docs-link">Documentation</a>
+       <a class="right offical-docs-link" id="offical-docs-link">Documentation</a>
   </div>
   </nav>
 </div>
@@ -124,9 +126,10 @@
             </div>
             <div class="small-4 columns wrap-option">
                 <input type="checkbox" name="add_on_click" class="add_on_click" ng-model="TrackingCode.AddOnClick" ng-click="ChangeBla()" />
-                <span class="">Wrap Code In Bla</span>  
+                <span class="">Something Else</span>  
             </div>
             <div class="small-4 columns wrap-option">
+            <div class="copy-btn">Copy</div>
             </div>
 
 
@@ -145,6 +148,7 @@
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
+     <script type="text/javascript" src="js/vendor/jquery.zclip.min.js"></script>
         <script src="js/app.js"></script>
     <script>
       $(document).foundation();
