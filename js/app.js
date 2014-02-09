@@ -91,9 +91,9 @@ $('#offical-docs-link').click(function(){
     $.get( "docs.html", function( data ) {
   $( "#docs-insert" ).html( data );
   });
-  $('#docs-insert').toggle("fast");
+  $('#docs-insert').fadeToggle();
   $('#offical-docs-link').toggleClass('fi-x');  
-  $('body').toggleClass("bg");
+ // $('body').toggleClass("bg");
 
 });
 
@@ -114,9 +114,6 @@ $('#offical-docs-link').click(function(){
 // path:'flash/ZeroClipboard.swf',
 // copy:$('.ng-binding').text()
 // });
-
-
-
 
 
 
