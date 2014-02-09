@@ -77,13 +77,15 @@ $('#offical-docs-link').click(function(){
 
 $("#onclick").click( function() {
 
-  var current = $(this);
-  console.log(current);
+  var code = $('.code').text();
+  var wrapped = 'onclick="' + code + '"';
+
     if ($(this).is(':checked')){
-        $('.code').prepend('onlick="').append('"');
+        $('.code').text(wrapped);
     }
+
     if ($(this).attr('unchecked')){
-        $('.code').prepend('').append('');
+        $('.code').find('_').
     }
 });
 
