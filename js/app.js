@@ -31,10 +31,11 @@ $(function(){
         if(ValidationSet === true){
 
           Repeater.find('.alert-box').removeClass('warning').addClass('success');
-
+          Repeater.find('.fi-check').removeClass('icon-off').addClass('icon-on');
         }else{
 
            Repeater.find('.alert-box').removeClass('success').addClass('warning');
+           Repeater.find('.fi-check').removeClass('icon-on').addClass('icon-off');
 
         }
 	});
@@ -81,16 +82,25 @@ $(function(){
 
   BindFloatLabels();
 
+
+
 // ** Google Docs Inline ==============================
 // ====================================================
+
 $('#offical-docs-link').click(function(){
-	$('#official-docs').slideToggle("fast");
-	$('#offical-docs-link').toggleClass('offical-docs-close');
-	if (window.innerWidth > 1024) {
-	$('#header').toggleClass('fixed');
-	$('body').toggleClass("bg");
-	}
+    $.get( "docs.html", function( data ) {
+  $( "#docs-insert" ).html( data );
+  });
+  $('#docs-insert').slideToggle("fast");
+  $('#offical-docs-link').toggleClass('offical-docs-close');  
+  $('body').toggleClass("bg");
+
 });
+
+
+
+
+
 
 
 });  // Ready
