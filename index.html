@@ -24,14 +24,15 @@
 <div class="small-12 columns">
 <div class="sticky">
   <nav class="top-bar" data-topbar>
-  <div class="small-12 medium-6 large-6 columns">
-       <h6 class="show-for-large-up">Google Analytics Event Tracking Code Builder</h6>
+  <div class="small-12 medium-9 large-9 columns" id="header">
+  <div class="logo" id="logo"><img src="img/logo.png" alt="Event Mason"></div>
+       <h6 class="show-for-large-up" id="header">Google Analytics Event Tracking Code Builder</h6>
        <h6 class="show-for-medium-only">Google Analytics Event Builder</h6>
        <h6 class="show-for-small-only">GA Events</h6>
 
   </div>
-  <div class="small-12 medium-6 large-6 columns">
-       <a class="right offical-docs-link" id="offical-docs-link">Documentation</a>
+  <div class="small-12 medium-3 large-3 columns">
+       <i id="doc-icon" class="fi-page-doc right"></i><a class="right offical-docs-link" id="offical-docs-link">Documentation</a>
   </div>
   </nav>
 </div>
@@ -60,6 +61,7 @@
        <div class="inputs">
        <div class="panel-top clearfix">
        <div class="count left">#{{$index + 1}}</div>   
+        <div class="title">Untitled - click to edit</div>
        <form class="right" ng-submit="AddTrackingCode()">       
         <input class="button plus" type="submit" value="Add +">
         </form>  

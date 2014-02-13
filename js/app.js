@@ -93,6 +93,7 @@ $('#offical-docs-link').click(function(){
   });
   $('#docs-insert').fadeToggle();
   $('#offical-docs-link').toggleClass('fi-x');  
+  $('#doc-icon').toggleClass('fi-page-doc');
  // $('body').toggleClass("bg");
 
 });
@@ -115,6 +116,22 @@ $('#offical-docs-link').click(function(){
 // copy:$('.ng-binding').text()
 // });
 
+// Reduce menu on scroll
+var top = 0;
+      $(window).scroll(function(event){
+
+          var current = $(this).scrollTop();
+
+        // If we're not at the top, make the menu smaller
+          if (current > top){
+             $('#logo').hide();
+             $('#header h6').css({"margin-top": "10px"});
+          }
+          else {
+             $('#logo').show();
+             $('#header h6').css({"margin-top": "50px"});
+          }
+      });
 
 
 });  // Ready

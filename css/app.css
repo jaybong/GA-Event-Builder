@@ -1,12 +1,15 @@
 
+body { background: url(../img/bg.png); }
 .button, form { margin: 0; }
 input[type="text"], input[type="checkbox"] { margin-bottom: 0.5em; }
 
 
-.top-bar { background: #2c3e50; padding: 0 0.9375rem; margin-bottom: 20px; height: auto; }
-.offical-docs-link { color: #fff; margin-right: 5px; }
+.top-bar { background: #3A8850; padding: 0 0.9375rem; margin-bottom: 20px; height: auto; }
+.offical-docs-link { color: #111; margin-right: 5px; }
+.offical-docs-link:hover { color: #333; }
 .top-bar .fi-x:before { position: absolute; right: 0; top: 15px; color: red;}
-
+.top-bar .fi-x:hover { text-decoration: none; }
+.top-bar .fi-page-doc { position: absolute; right: 0; top: 0px; }
 
 input[type="text"] { font-size: 11px; }  
 .field-wrapper + .field-wrapper { margin-left: 3%; }
@@ -14,8 +17,10 @@ input[type="text"] { font-size: 11px; }
 .clearfix:after { content: " "; visibility: hidden; display: block; height: 0; clear: both; }
 .inputs { position: relative; margin-top: 20px; }
 .top-bar {  }
-.top-bar h6 { display: inline; color: #fff; margin-top: 12px; }
+.top-bar h6 { display: inline; color: #fff; margin-top: 50px; font-size: 18px; color: #111; }
 .top-bar a { display: inline-block; }
+
+
 
 
 /*Float Label*/
@@ -44,6 +49,8 @@ label.show {
 
 .panel-top { margin-bottom: 20px; }
 .count { color: #6B6474; font-size: 16px; } 
+.title { margin-left: 20px; color: #A0999C; font-size: 16px; display: inline-block; }
+
 
 #official-docs, #offical-docs-close, #docs-insert  { display: none; }
 .docs-insert { border: 1px dotted #a0d3e8; border-top: none; position: relative; bottom: 20px; padding: 20px; background: #f5f5f5; margin-top: 20px;}
@@ -52,6 +59,7 @@ label.show {
 .nav .alert-box { position: fixed; width: 100%; z-index: 1; position: fixed; }
 .nav { padding-bottom: 80px; }
 .bg { background: #2c3e50; }
+.logo { float: left; margin-right: 35px; margin-bottom: 10px; }
 
 
 .wrap-option { font-size: 13px; }
@@ -61,6 +69,7 @@ label.show {
 .example-wrap { font-size: 11px; }
 .example-hover { padding: 0.5em; display: none; position: absolute; z-index: 1; width: 100%;  }
 .example-wrap:hover .example-hover { display: block; }
+
 
 
 
