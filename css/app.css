@@ -72,6 +72,7 @@ label.show {
 .total-count { background: #666; display: inline-block; padding: 20px 28px; font-size: 30px; opacity: .75; position: absolute; top: 0; right: -100px; }
 
 
+
 /*Small screens*/
 @media only screen { } /* Define mobile styles */
 
