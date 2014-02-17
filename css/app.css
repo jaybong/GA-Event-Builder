@@ -4,7 +4,7 @@ body { background: url(../img/bg.png); }
 input[type="text"], input[type="checkbox"] { margin-bottom: 0.5em; }
 
 
-.top-bar { background: #3A8850; padding: 0 0.9375rem; margin-bottom: 20px; height: auto; }
+.top-bar { background: #7C7C7C; padding: 0 0.9375rem; margin-bottom: 20px; height: auto; }
 .offical-docs-link { color: #111; margin-right: 5px; }
 .offical-docs-link:hover { color: #333; }
 .top-bar .fi-x:before { position: absolute; right: 0; top: 15px; color: red;}
