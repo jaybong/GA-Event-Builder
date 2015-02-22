@@ -61,7 +61,7 @@
        <div class="inputs">
        <div class="panel-top clearfix">
        <div class="count left">#{{$index + 1}}</div>   
-        <div class="title">Untitled - click to edit</div>
+        <div class="title" contentEditable="true">Untitled - click to edit</div>
        <form class="right" ng-submit="AddTrackingCode()">       
         <input class="button plus" type="submit" value="Add +">
         </form>  
@@ -108,8 +108,10 @@
                 </div>
             </div>    
                   <hr>
-            
-            <div class="code alert-box warning" ng-switch on="TrackingCode.AddOnClick">
+          
+
+
+            <div class="code alert-box warning" ng-switch on="TrackingCode.AddOnClick" ng-hide="TrackingCode.UniversalAnalytics">
 
                 <div ng-switch-when="true">
                     <!-- code to render when AddOnClick checkbox is checked-->
@@ -119,24 +121,40 @@
                     <!-- code to render when AddOnClick checkbox is un-checked -->
                     _gaq.push(['_trackEvent', '{{category}}', '{{action}}', '{{label}}', '{{value}}', '{{nonInteraction}}']);
                 </div>
-               <i class="fi-check right icon-off"></i>
+                <i class="fi-check right icon-off"></i>
             </div>
+
+
+            <div class="code alert-box warning" ng-switch on="TrackingCode.UniversalAnalytics" ng-show="TrackingCode.UniversalAnalytics">
+              <div ng-switch-when="true">
+                    <!-- code to render when AddOnClick checkbox is checked-->
+                    ga('send', 'event', '{{category}}', '{{action}}', '{{label}}', '{{value}}');                    
+                </div>
+                <div ng-switch-default>
+                    <!-- code to render when AddOnClick checkbox is un-checked -->
+                    DEFAULT_gaq.push(['_trackEvent', '{{category}}', '{{action}}', '{{label}}', '{{value}}', '{{nonInteraction}}']);
+                </div>
+                <i class="fi-check right icon-off"></i>
+            </div>
+
+
             <div class="row">
             <div class="small-4 columns wrap-option">
-                <input type="checkbox" name="add_on_click" class="add_on_click" ng-model="TrackingCode.AddOnClick" ng-click="ChangeCheckBox()" />
-                <span class="">onclick</span>       
+                <input type="checkbox" name="add_on_click" class="add_on_click" ng-model="TrackingCode.AddOnClick" ng-click="OnClickCheckbox()" />
+                <span class="">Wrap in onclick</span>       
             </div>
             <div class="small-4 columns wrap-option">
-                <input type="checkbox" name="add_on_click" class="add_on_click" ng-model="TrackingCode.AddOnClick" ng-click="ChangeBla()" />
-                <span class="">Something Else</span>  
+                <input type="checkbox" name="add_on_click" class="add_on_click" ng-model="TrackingCode.UniversalAnalytics" ng-click="UniversalGACheckbox()" />
+                <span class="">Use Universal Analytics</span>  
             </div>
             <div class="small-4 columns wrap-option">
-            <div class="copy-btn">Copy</div>
+            <!-- <div class="copy-btn">Copy</div> -->
             </div>
 
 
             </div>
         </div>
+
 
     </div>
 
@@ -147,6 +165,8 @@
     </div>
 
   </div>
+
+
 
 
 
